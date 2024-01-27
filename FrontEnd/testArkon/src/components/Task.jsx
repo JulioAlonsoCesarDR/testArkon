@@ -86,6 +86,13 @@ const Task = () => {
     }
   }, [task]);
 
+  useEffect(() => {
+    if (task.hours == 2) {
+      saveTask("minutes", 0);
+      setOptions("");
+    }
+  }, [task.hours]);
+
   return (
     <>
       <div
@@ -134,6 +141,7 @@ const Task = () => {
               label="Establecer tiempo"
               className="col-12 col-md-4"
               variant="outlined"
+              disabled={task.hours >= 2}
             >
               {optionTime.map((option) => (
                 <MenuItem key={option.value} value={option.value}>
@@ -145,9 +153,9 @@ const Task = () => {
               color="secondary"
               value={task.hours}
               id={"hours"}
-              onChange={(e) =>
-                e.target.value <= 2 && saveTask(e.target.id, e.target.value)
-              }
+              onChange={(e) => {
+                e.target.value <= 2 && saveTask(e.target.id, e.target.value);
+              }}
               type="number"
               required
               className="mx-0 my-2 mx-md-2 my-md-0"

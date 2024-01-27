@@ -3,13 +3,14 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import PlayCircleFilledIcon from "@mui/icons-material/PlayCircleFilled";
 import IconButton from "@mui/material/IconButton";
 import Chip from "@mui/material/Chip";
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import { TaskContext } from "./../context/TaskContext";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import DialogAlert from "./DialogAlert";
 
-const ListTask = () => {
+const ListTask = (props) => {
+  const { actionRefresh } = props;
   const apiUrl = import.meta.env.VITE_BACKEND_URL;
   const { listTask, updateTask } = useContext(TaskContext);
   const navigate = useNavigate();
@@ -24,19 +25,22 @@ const ListTask = () => {
     try {
       const response = await axios.delete(`${apiUrl}/api/task/${id}`);
       console.log("Usuario creado:", response.data);
+      setOpenDialog(false);
+      actionRefresh();
     } catch (error) {
       console.error("Error al crear el usuario:", error);
     }
   };
-  const objectDelete = {
-    open: false,
-    handleDelete: null,
-    nameTask: "",
-  };
+
+  const [openDialog, setOpenDialog] = useState(false);
+  const [task, setTask] = useState({
+    name: "",
+    id: "",
+  });
+
   const OpenAlertDelete = (id, name) => {
-    objectDelete.open = true;
-    objectDelete.handleDelete = ()=>{ handleDelete(id) };
-    objectDelete.nameTask = name;
+    setOpenDialog(true);
+    setTask({ id, name });
   };
 
   return (
@@ -85,9 +89,10 @@ const ListTask = () => {
         </div>
       ))}
       <DialogAlert
-        open={objectDelete.open}
-        nameTask={objectDelete.nameTask}
-        handleDelete={objectDelete.handleDelete}
+        handleClose={() => setOpenDialog(false)}
+        open={openDialog}
+        nameTask={task.name}
+        handleDelete={() => handleDelete(task.id)}
       />
     </>
   );

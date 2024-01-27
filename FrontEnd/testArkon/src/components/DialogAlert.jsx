@@ -7,33 +7,25 @@ import DialogTitle from "@mui/material/DialogTitle";
 import Button from "@mui/material/Button";
 
 const DialogAlert = (props) => {
-  const { open, nameTask, handleDelete } = props;
-  const [isOpen, setIsOpen] = useState(open);
+  const { open, nameTask, handleDelete, handleClose } = props;
+
   return (
     <>
       <Dialog
-        open={isOpen}
-        onClose={() => setIsOpen(!isOpen)}
+        open={open}
+        onClose={handleClose}
         aria-labelledby="alert-dialog-title"
         aria-describedby="alert-dialog-description"
       >
-        <DialogTitle id="alert-dialog-title">
-          {"Eliminar tarea"}
-        </DialogTitle>
+        <DialogTitle id="alert-dialog-title">{"Eliminar tarea"}</DialogTitle>
         <DialogContent>
           <DialogContentText id="alert-dialog-description">
-           Estas seguro de eliminar la tarea {nameTask} 
+            Estas seguro de eliminar la tarea {nameTask}
           </DialogContentText>
         </DialogContent>
         <DialogActions>
-          <Button onClick={() => setIsOpen(!isOpen)}>Cancelar</Button>
-          <Button
-            onClick={() => {
-              handleDelete;
-              setIsOpen(!isOpen);
-            }}
-            autoFocus
-          >
+          <Button onClick={handleClose}>Cancelar</Button>
+          <Button onClick={handleDelete} autoFocus>
             Aceptar
           </Button>
         </DialogActions>
