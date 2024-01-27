@@ -1,10 +1,11 @@
 import Task from "../models/Task.js";
 
 const createTask = async (req, res) => {
+  console.log('task', req.body)
   const task = new Task(req.body);
   try {
-    const saveTask = await task.save();
-    res.json(saveTask);
+  await task.save();
+  res.json({msg:"Tarea Creada"})
   } catch (error) {
     console.log(error);
   }
@@ -22,7 +23,6 @@ const getTasks = async (req, res) => {
 const getTaskById = async (req, res) => {
   const { id } = req.params;
   const task = await Task.findById(id);
-  console.log('task', task)
   if (!task) {
     const error = new Error("No Encontrado");
     return res.status(404).json({ msg: error.message });

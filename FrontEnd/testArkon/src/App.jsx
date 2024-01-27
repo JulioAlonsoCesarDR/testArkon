@@ -1,8 +1,8 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Header from "./components/Header";
-import ListTask from "./components/ListTask";
 import Task from "./components/Task";
 import StateTask from "./context/TaskContext";
+import DashboardTask from "./components/DashboardTask";
 
 function App() {
   return (
@@ -11,7 +11,7 @@ function App() {
       <StateTask>
         <Routes>
           <Route path="/" element={<Header />}>
-            <Route index element={<ListTask />} />
+            <Route index element={<DashboardTask />} />
             <Route path="task/:id?" element={<Task />} />
           </Route>
         </Routes>
