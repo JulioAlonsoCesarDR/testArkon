@@ -4,6 +4,7 @@ import { useContext, useEffect, useState } from "react";
 import { TaskContext } from "./../context/TaskContext";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import { convertToMilliseconds } from "../helpers/convertTimes";
 
 const Task = () => {
   const { task, saveTask, updateTask } = useContext(TaskContext);
@@ -32,14 +33,15 @@ const Task = () => {
     updateTask(task);
     navigate("/");
   };
-
+  const timer= convertToMilliseconds(task.hours, task.minutes,);
   const handleSubmit = async (e) => {
     e.preventDefault();
-
+    
     const body = {
       name: task.name,
       description: task.description,
-      state: false,
+      state: 'undone',
+      timer:timer
     };
     try {
       let response;
@@ -76,6 +78,7 @@ const Task = () => {
         break;
     }
   };
+  
   useEffect(() => {
     setDefaultTime();
   }, [option]);

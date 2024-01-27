@@ -12,10 +12,14 @@ const taskSchema = mongoose.Schema(
       trim: true,
       required: true,
     },
-    state: {
-      type: Boolean,
-      default: false,
+    status: {
+      type: String,
+      default: 'undone',
     },
+    timer: {
+      type: Number,
+      required: true
+    }
   },
   {
     timestamps: true,

@@ -12,11 +12,10 @@ import DialogAlert from "./DialogAlert";
 const ListTask = (props) => {
   const { actionRefresh } = props;
   const apiUrl = import.meta.env.VITE_BACKEND_URL;
-  const { listTask, updateTask } = useContext(TaskContext);
+  const { listTask, updateTask} = useContext(TaskContext);
   const navigate = useNavigate();
 
   const handleEdit = async (task) => {
-    console.log("task", task);
     await updateTask(task);
     navigate("/task");
   };
@@ -65,7 +64,13 @@ const ListTask = (props) => {
             <u>Progreso</u>
           </div>
           <div className="col-md-3 h6 d-flex flex-row align-items-center justify-content-center">
-            <IconButton color="inherit" aria-label="Empezar tarea">
+            <IconButton
+              onClick={() => {
+                updateTask({...task, start: true})
+              }}
+              color="inherit"
+              aria-label="Empezar tarea"
+            >
               <PlayCircleFilledIcon />
             </IconButton>
             <IconButton

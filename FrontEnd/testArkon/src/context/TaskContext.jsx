@@ -8,7 +8,7 @@ const StateTask = ({ children }) => {
     name: "",
     description: "",
     status: "",
-    state: false,
+    start: false,
     minutes:0,
     hours:0,
   });

@@ -39,7 +39,8 @@ const updateTask = async (req, res) => {
   }
   task.name = req.body.name || task.name;
   task.description = req.body.description || task.description;
-  task.state = req.body.state || task.state;
+  task.status = req.body.status || task.status;
+  task.timer = req.body.timer || task.timer;
   try {
     const taskSave = await task.save();
     res.json(taskSave);
